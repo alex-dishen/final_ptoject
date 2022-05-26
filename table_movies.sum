@@ -1,0 +1,30 @@
+alter table "movies"
+    add id serial;
+
+create unique index movies_id_uindex
+    on "movies" (id);
+
+alter table "movies"
+    add constraint movies_pk
+        primary key (id);
+
+alter table "movies"
+    add "Name" varchar;
+
+alter table "movies"
+    add "Director" varchar;
+
+alter table "movies"
+    add "Year" int;
+
+INSERT INTO movies ("Name", "Director", "Year")
+VALUES ('Joker', 'Todd Phillips', '2019');
+
+INSERT INTO movies ("Name", "Director", "Year")
+VALUES ('The Professor', 'Wayne Roberts', '2018');
+
+INSERT INTO movies ("Name", "Director", "Year")
+VALUES ('Spider-Man: No Way Home', 'Jon Watts', '2021');
+
+INSERT INTO movies ("Name", "Director", "Year")
+VALUES ('Point Break', 'Ericson Core', '2015');
