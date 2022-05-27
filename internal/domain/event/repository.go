@@ -44,11 +44,6 @@ func (r *repository) FindAll() ([]Movie, error) {
 		log.Fatal("filmsCol: ", err)
 	}
 
-	fmt.Printf("Records in the %q collection:\n", filmsCol.Name())
-	for i := range films {
-		fmt.Printf("Record #%d: %#v\n", i, films[i])
-	}
-
 	return films, nil
 }
 
@@ -84,6 +79,7 @@ func (r *repository) CreateMovie(name string, director string, year int64) (*Mov
 	}
 	db.LC().SetLevel(db.LogLevelDebug)
 	defer sess.Close()
+
 	_, err = sess.SQL().
 		InsertInto("movies").
 		Columns("name", "director", "year").Values(name, director, year).
@@ -104,34 +100,13 @@ func (r *repository) UpdateMovie(id int64, name string, director string, year in
 		log.Fatal("Open: ", err)
 	}
 	db.LC().SetLevel(db.LogLevelDebug)
-
 	defer sess.Close()
 
-	if name != "" {
+	if name != "" || director != "" || year != 0 {
 		_, err := sess.SQL().
 			Update("movies").
 			Set("name = ?", name).
-			Where("id = ?", id).
-			Exec()
-		if err != nil {
-			fmt.Printf("sess.SQL: %v. This is expected on the read-only sandbox.\n", err)
-		}
-	}
-
-	if director != "" {
-		_, err := sess.SQL().
-			Update("movies").
 			Set("director = ?", director).
-			Where("id = ?", id).
-			Exec()
-		if err != nil {
-			fmt.Printf("sess.SQL: %v. This is expected on the read-only sandbox.\n", err)
-		}
-	}
-
-	if year != 0 {
-		_, err := sess.SQL().
-			Update("movies").
 			Set("year = ?", year).
 			Where("id = ?", id).
 			Exec()

@@ -20,7 +20,7 @@ func NewEventController(s *movie.Service) *EventController {
 
 func (c *EventController) FindAll() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		events, err := (*c.service).FindAll()
+		movies, err := (*c.service).FindAll()
 		if err != nil {
 			fmt.Printf("EventController.FindAll(): %s", err)
 			err = internalServerError(w, err)
@@ -30,7 +30,7 @@ func (c *EventController) FindAll() http.HandlerFunc {
 			return
 		}
 
-		err = success(w, events)
+		err = success(w, movies)
 		if err != nil {
 			fmt.Printf("EventController.FindAll(): %s", err)
 		}
@@ -48,7 +48,7 @@ func (c *EventController) FindById() http.HandlerFunc {
 			}
 			return
 		}
-		event, err := (*c.service).FindById(id)
+		movies, err := (*c.service).FindById(id)
 		if err != nil {
 			fmt.Printf("EventController.FindById(): %s", err)
 			err = internalServerError(w, err)
@@ -58,7 +58,7 @@ func (c *EventController) FindById() http.HandlerFunc {
 			return
 		}
 
-		err = success(w, event)
+		err = success(w, movies)
 		if err != nil {
 			fmt.Printf("EventController.FindOne(): %s", err)
 		}
@@ -79,7 +79,7 @@ func (c *EventController) CreateMovie() http.HandlerFunc {
 			return
 		}
 
-		event, err := (*c.service).CreateMovie(name, director, year)
+		movies, err := (*c.service).CreateMovie(name, director, year)
 		if err != nil {
 			fmt.Printf("EventController.CreateMovie(): %s", err)
 			err = internalServerError(w, err)
@@ -89,7 +89,7 @@ func (c *EventController) CreateMovie() http.HandlerFunc {
 			return
 		}
 
-		err = success(w, event)
+		err = success(w, movies)
 		if err != nil {
 			fmt.Printf("EventController.CreateMovie(): %s", err)
 		}
@@ -111,7 +111,7 @@ func (c *EventController) UpdateMovie() http.HandlerFunc {
 		director := chi.URLParam(r, "director")
 		year, err := strconv.ParseInt(chi.URLParam(r, "year"), 10, 64)
 
-		event, err := (*c.service).UpdateMovie(id, name, director, year)
+		movies, err := (*c.service).UpdateMovie(id, name, director, year)
 		if err != nil {
 			fmt.Printf("EventController.UpdateMovie(): %s", err)
 			err = internalServerError(w, err)
@@ -121,7 +121,7 @@ func (c *EventController) UpdateMovie() http.HandlerFunc {
 			return
 		}
 
-		err = success(w, event)
+		err = success(w, movies)
 		if err != nil {
 			fmt.Printf("EventController.UpdateMovie(): %s", err)
 		}

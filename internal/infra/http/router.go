@@ -45,11 +45,11 @@ func AddEventRoutes(router *chi.Router, eventController *controllers.EventContro
 			"/{id}",
 			eventController.FindById(),
 		)
-		apiRouter.Get(
+		apiRouter.Post(
 			"/{name}/{director}/{year}",
 			eventController.CreateMovie(),
 		)
-		apiRouter.Get(
+		apiRouter.Post(
 			"/update/{id}/{name}/{director}/{year}",
 			eventController.UpdateMovie(),
 		)
