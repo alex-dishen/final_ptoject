@@ -102,11 +102,31 @@ func (r *repository) UpdateMovie(id int64, name string, director string, year in
 	db.LC().SetLevel(db.LogLevelDebug)
 	defer sess.Close()
 
-	if name != "" || director != "" || year != 0 {
+	if name != "" {
 		_, err := sess.SQL().
 			Update("movies").
 			Set("name = ?", name).
+			Where("id = ?", id).
+			Exec()
+		if err != nil {
+			fmt.Printf("sess.SQL: %v. This is expected on the read-only sandbox.\n", err)
+		}
+	}
+
+	if director != "" {
+		_, err := sess.SQL().
+			Update("movies").
 			Set("director = ?", director).
+			Where("id = ?", id).
+			Exec()
+		if err != nil {
+			fmt.Printf("sess.SQL: %v. This is expected on the read-only sandbox.\n", err)
+		}
+	}
+
+	if year != 0 {
+		_, err := sess.SQL().
+			Update("movies").
 			Set("year = ?", year).
 			Where("id = ?", id).
 			Exec()
