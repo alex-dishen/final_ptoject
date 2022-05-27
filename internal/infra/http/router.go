@@ -43,7 +43,7 @@ func AddEventRoutes(router *chi.Router, eventController *controllers.EventContro
 		)
 		apiRouter.Get(
 			"/{id}",
-			eventController.FindOne(),
+			eventController.FindById(),
 		)
 		apiRouter.Get(
 			"/{name}/{director}/{year}",
@@ -51,7 +51,7 @@ func AddEventRoutes(router *chi.Router, eventController *controllers.EventContro
 		)
 		apiRouter.Get(
 			"/update/{id}/{name}/{director}/{year}",
-			eventController.UpdateName(),
+			eventController.UpdateMovie(),
 		)
 	})
 }

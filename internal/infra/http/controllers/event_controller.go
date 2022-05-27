@@ -9,10 +9,10 @@ import (
 )
 
 type EventController struct {
-	service *event.Service
+	service *movie.Service
 }
 
-func NewEventController(s *event.Service) *EventController {
+func NewEventController(s *movie.Service) *EventController {
 	return &EventController{
 		service: s,
 	}
@@ -37,23 +37,23 @@ func (c *EventController) FindAll() http.HandlerFunc {
 	}
 }
 
-func (c *EventController) FindOne() http.HandlerFunc {
+func (c *EventController) FindById() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		id, err := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
 		if err != nil {
-			fmt.Printf("EventController.FindOne(): %s", err)
+			fmt.Printf("EventController.FindById(): %s", err)
 			err = internalServerError(w, err)
 			if err != nil {
-				fmt.Printf("EventController.FindOne(): %s", err)
+				fmt.Printf("EventController.FindById(): %s", err)
 			}
 			return
 		}
-		event, err := (*c.service).FindOne(id)
+		event, err := (*c.service).FindById(id)
 		if err != nil {
-			fmt.Printf("EventController.FindOne(): %s", err)
+			fmt.Printf("EventController.FindById(): %s", err)
 			err = internalServerError(w, err)
 			if err != nil {
-				fmt.Printf("EventController.FindOne(): %s", err)
+				fmt.Printf("EventController.FindById(): %s", err)
 			}
 			return
 		}
@@ -96,14 +96,14 @@ func (c *EventController) CreateMovie() http.HandlerFunc {
 	}
 }
 
-func (c *EventController) UpdateName() http.HandlerFunc {
+func (c *EventController) UpdateMovie() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		id, err := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
 		if err != nil {
-			fmt.Printf("EventController.CreateMovie(): %s", err)
+			fmt.Printf("EventController.UpdateMovie(): %s", err)
 			err = internalServerError(w, err)
 			if err != nil {
-				fmt.Printf("EventController.CreateMovie(): %s", err)
+				fmt.Printf("EventController.UpdateMovie(): %s", err)
 			}
 			return
 		}
@@ -111,19 +111,19 @@ func (c *EventController) UpdateName() http.HandlerFunc {
 		director := chi.URLParam(r, "director")
 		year, err := strconv.ParseInt(chi.URLParam(r, "year"), 10, 64)
 
-		event, err := (*c.service).UpdateName(id, name, director, year)
+		event, err := (*c.service).UpdateMovie(id, name, director, year)
 		if err != nil {
-			fmt.Printf("EventController.CreateMovie(): %s", err)
+			fmt.Printf("EventController.UpdateMovie(): %s", err)
 			err = internalServerError(w, err)
 			if err != nil {
-				fmt.Printf("EventController.CreateMovie(): %s", err)
+				fmt.Printf("EventController.UpdateMovie(): %s", err)
 			}
 			return
 		}
 
 		err = success(w, event)
 		if err != nil {
-			fmt.Printf("EventController.CreateMovie(): %s", err)
+			fmt.Printf("EventController.UpdateMovie(): %s", err)
 		}
 	}
 }

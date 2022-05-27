@@ -1,4 +1,4 @@
-package event
+package movie
 
 import (
 	"fmt"
@@ -16,9 +16,9 @@ var settings = postgresql.ConnectionURL{
 
 type Repository interface {
 	FindAll() ([]Movie, error)
-	FindOne(id int64) (*Movie, error)
+	FindById(id int64) (*Movie, error)
 	CreateMovie(name string, director string, year int64) (*Movie, error)
-	UpdateName(id int64, name string, director string, year int64) (*Movie, error)
+	UpdateMovie(id int64, name string, director string, year int64) (*Movie, error)
 }
 
 type repository struct {
@@ -52,7 +52,7 @@ func (r *repository) FindAll() ([]Movie, error) {
 	return films, nil
 }
 
-func (r *repository) FindOne(id int64) (*Movie, error) {
+func (r *repository) FindById(id int64) (*Movie, error) {
 	sess, err := postgresql.Open(settings)
 	if err != nil {
 		log.Fatal("Open: ", err)
@@ -98,7 +98,7 @@ func (r *repository) CreateMovie(name string, director string, year int64) (*Mov
 	}, nil
 }
 
-func (r *repository) UpdateName(id int64, name string, director string, year int64) (*Movie, error) {
+func (r *repository) UpdateMovie(id int64, name string, director string, year int64) (*Movie, error) {
 	sess, err := postgresql.Open(settings)
 	if err != nil {
 		log.Fatal("Open: ", err)
@@ -144,7 +144,7 @@ func (r *repository) UpdateName(id int64, name string, director string, year int
 
 	err = sess.SQL().
 		SelectFrom("movies").
-		Where("id", id). // Or Where("last_name = ?", "Poe")
+		Where("id", id).
 		One(&films)
 	if err != nil {
 		log.Fatal("sess.SQL: ", err)

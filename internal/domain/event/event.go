@@ -1,4 +1,4 @@
-package event
+package movie
 
 type Movie struct {
 	ID       int64  `db:"id,omitempty"`

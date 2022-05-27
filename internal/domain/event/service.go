@@ -1,10 +1,10 @@
-package event
+package movie
 
 type Service interface {
 	FindAll() ([]Movie, error)
-	FindOne(id int64) (*Movie, error)
+	FindById(id int64) (*Movie, error)
 	CreateMovie(name string, director string, year int64) (*Movie, error)
-	UpdateName(id int64, name string, director string, year int64) (*Movie, error)
+	UpdateMovie(id int64, name string, director string, year int64) (*Movie, error)
 }
 
 type service struct {
@@ -21,14 +21,14 @@ func (s *service) FindAll() ([]Movie, error) {
 	return (*s.repo).FindAll()
 }
 
-func (s *service) FindOne(id int64) (*Movie, error) {
-	return (*s.repo).FindOne(id)
+func (s *service) FindById(id int64) (*Movie, error) {
+	return (*s.repo).FindById(id)
 }
 
 func (s *service) CreateMovie(name string, director string, year int64) (*Movie, error) {
 	return (*s.repo).CreateMovie(name, director, year)
 }
 
-func (s *service) UpdateName(id int64, name string, director string, year int64) (*Movie, error) {
-	return (*s.repo).UpdateName(id, name, director, year)
+func (s *service) UpdateMovie(id int64, name string, director string, year int64) (*Movie, error) {
+	return (*s.repo).UpdateMovie(id, name, director, year)
 }

@@ -41,8 +41,8 @@ func main() {
 	}()
 
 	// Event
-	eventRepository := event.NewRepository()
-	eventService := event.NewService(&eventRepository)
+	eventRepository := movie.NewRepository()
+	eventService := movie.NewService(&eventRepository)
 	eventController := controllers.NewEventController(&eventService)
 
 	// HTTP Server
