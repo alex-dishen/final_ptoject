@@ -5,8 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cda95464-2475-498d-b292-ce89bcceb626" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c068737a-ecd9-45b6-b8be-d081b05be502.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c068737a-ecd9-45b6-b8be-d081b05be502.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/domain/event/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/domain/event/repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/test_server/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/test_server/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/domain/event/event.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/domain/event/repository.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/domain/event/service.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/infra/http/controllers/event_controller.go" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

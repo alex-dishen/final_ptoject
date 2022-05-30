@@ -8,7 +8,7 @@ import (
 	"runtime/debug"
 	"syscall"
 
-	"github.com/test_server/internal/domain/event"
+	"github.com/test_server/internal/domain/movie"
 	"github.com/test_server/internal/infra/http"
 	"github.com/test_server/internal/infra/http/controllers"
 )

@@ -3,7 +3,7 @@ package controllers
 import (
 	"fmt"
 	"github.com/go-chi/chi/v5"
-	"github.com/test_server/internal/domain/event"
+	"github.com/test_server/internal/domain/movie"
 	"net/http"
 	"strconv"
 )
