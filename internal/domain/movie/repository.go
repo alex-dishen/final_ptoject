@@ -53,7 +53,7 @@ func (r *repository) FindById(id int64) (*Movie, error) {
 	}
 	defer sess.Close()
 
-	var film Movie
+	var film *Movie
 
 	err = sess.SQL().
 		SelectFrom("movies").
@@ -63,12 +63,7 @@ func (r *repository) FindById(id int64) (*Movie, error) {
 		fmt.Print("Query: ", err)
 	}
 
-	return &Movie{
-		ID:       film.ID,
-		Name:     film.Name,
-		Director: film.Director,
-		Year:     film.Year,
-	}, nil
+	return film, nil
 }
 
 func (r *repository) CreateMovie(m *Movie) (*Movie, error) {

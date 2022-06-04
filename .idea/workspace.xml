@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cda95464-2475-498d-b292-ce89bcceb626" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/domain/movie/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/domain/movie/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/domain/movie/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/domain/movie/service.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/infra/http/controllers/movie_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/infra/http/controllers/movie_controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/infra/http/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/infra/http/router.go" afterDir="false" />
-    </list>
+    <list default="true" id="cda95464-2475-498d-b292-ce89bcceb626" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
