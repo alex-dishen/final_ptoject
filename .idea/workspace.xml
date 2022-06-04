@@ -5,14 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cda95464-2475-498d-b292-ce89bcceb626" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c068737a-ecd9-45b6-b8be-d081b05be502.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c068737a-ecd9-45b6-b8be-d081b05be502.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/test_server/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/test_server/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/domain/event/event.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/domain/event/repository.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/domain/event/service.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/infra/http/controllers/event_controller.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/domain/movie/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/domain/movie/repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/domain/movie/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/domain/movie/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/infra/http/controllers/movie_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/infra/http/controllers/movie_controller.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/infra/http/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/infra/http/router.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,14 +54,6 @@
   }
 }</component>
   <component name="RunManager">
-    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
-      <module name="final_ptoject" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="FILE" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <method v="2" />
-    </configuration>
     <configuration name="go build github.com/test_server/cmd/test_server" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="final_ptoject" />
       <working_directory value="$PROJECT_DIR$" />
@@ -71,15 +61,6 @@
       <package value="github.com/test_server/cmd/test_server" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$/cmd/test_server/main.go" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
-      <module name="final_ptoject" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="DIRECTORY" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <framework value="gotest" />
       <method v="2" />
     </configuration>
     <recent_temporary>

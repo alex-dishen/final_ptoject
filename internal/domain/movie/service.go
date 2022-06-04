@@ -3,8 +3,9 @@ package movie
 type Service interface {
 	FindAll() ([]Movie, error)
 	FindById(id int64) (*Movie, error)
-	CreateMovie(name string, director string, year int64) (*Movie, error)
-	UpdateMovie(id int64, name string, director string, year int64) (*Movie, error)
+	CreateMovie(m *Movie) (*Movie, error)
+	UpdateMovie(m *Movie) (*Movie, error)
+	Delete(id int64) error
 }
 
 type service struct {
@@ -25,10 +26,14 @@ func (s *service) FindById(id int64) (*Movie, error) {
 	return (*s.repo).FindById(id)
 }
 
-func (s *service) CreateMovie(name string, director string, year int64) (*Movie, error) {
-	return (*s.repo).CreateMovie(name, director, year)
+func (s *service) CreateMovie(m *Movie) (*Movie, error) {
+	return (*s.repo).CreateMovie(m)
 }
 
-func (s *service) UpdateMovie(id int64, name string, director string, year int64) (*Movie, error) {
-	return (*s.repo).UpdateMovie(id, name, director, year)
+func (s *service) UpdateMovie(m *Movie) (*Movie, error) {
+	return (*s.repo).UpdateMovie(m)
+}
+
+func (s *service) Delete(id int64) error {
+	return (*s.repo).Delete(id)
 }

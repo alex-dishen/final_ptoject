@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/go-chi/chi/v5"
 	"github.com/test_server/internal/domain/movie"
@@ -67,19 +68,20 @@ func (c *EventController) FindById() http.HandlerFunc {
 
 func (c *EventController) CreateMovie() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		name := chi.URLParam(r, "name")
-		director := chi.URLParam(r, "director")
-		year, err := strconv.ParseInt(chi.URLParam(r, "year"), 10, 64)
+
+		var film *movie.Movie
+
+		err := json.NewDecoder(r.Body).Decode(&film)
 		if err != nil {
-			fmt.Printf("EventController.CreateMovie(): %s", err)
+			fmt.Printf("EventController.Create(): %s", err)
 			err = internalServerError(w, err)
 			if err != nil {
-				fmt.Printf("EventController.CreateMovie(): %s", err)
+				fmt.Printf("EventController.Create(): %s", err)
 			}
 			return
 		}
 
-		movies, err := (*c.service).CreateMovie(name, director, year)
+		movies, err := (*c.service).CreateMovie(film)
 		if err != nil {
 			fmt.Printf("EventController.CreateMovie(): %s", err)
 			err = internalServerError(w, err)
@@ -98,20 +100,19 @@ func (c *EventController) CreateMovie() http.HandlerFunc {
 
 func (c *EventController) UpdateMovie() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		id, err := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
+
+		var film *movie.Movie
+
+		err := json.NewDecoder(r.Body).Decode(&film)
 		if err != nil {
-			fmt.Printf("EventController.UpdateMovie(): %s", err)
+			fmt.Printf("EventController.Update(): %s", err)
 			err = internalServerError(w, err)
 			if err != nil {
-				fmt.Printf("EventController.UpdateMovie(): %s", err)
+				fmt.Printf("EventController.Update(): %s", err)
 			}
 			return
 		}
-		name := chi.URLParam(r, "name")
-		director := chi.URLParam(r, "director")
-		year, err := strconv.ParseInt(chi.URLParam(r, "year"), 10, 64)
-
-		movies, err := (*c.service).UpdateMovie(id, name, director, year)
+		movies, err := (*c.service).UpdateMovie(film)
 		if err != nil {
 			fmt.Printf("EventController.UpdateMovie(): %s", err)
 			err = internalServerError(w, err)
@@ -124,6 +125,36 @@ func (c *EventController) UpdateMovie() http.HandlerFunc {
 		err = success(w, movies)
 		if err != nil {
 			fmt.Printf("EventController.UpdateMovie(): %s", err)
+		}
+	}
+}
+
+func (c *EventController) Delete() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+
+		id, err := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
+		if err != nil {
+			fmt.Printf("MovieController.Delete(): %s", err)
+			err = internalServerError(w, err)
+			if err != nil {
+				fmt.Printf("MovieController.Delete(): %s", err)
+			}
+			return
+		}
+		res := (*c.service).Delete(id)
+
+		if err != nil {
+			fmt.Printf("MovieController.Delete(): %s", err)
+			err = internalServerError(w, err)
+			if err != nil {
+				fmt.Printf("MovieController.Delete(): %s", err)
+			}
+			return
+		}
+
+		err = success(w, res)
+		if err != nil {
+			fmt.Printf("MovieController.Delete(): %s", err)
 		}
 	}
 }

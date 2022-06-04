@@ -2,9 +2,7 @@ package movie
 
 import (
 	"fmt"
-	"github.com/upper/db/v4"
 	"github.com/upper/db/v4/adapter/postgresql"
-	"log"
 )
 
 var settings = postgresql.ConnectionURL{
@@ -17,8 +15,9 @@ var settings = postgresql.ConnectionURL{
 type Repository interface {
 	FindAll() ([]Movie, error)
 	FindById(id int64) (*Movie, error)
-	CreateMovie(name string, director string, year int64) (*Movie, error)
-	UpdateMovie(id int64, name string, director string, year int64) (*Movie, error)
+	CreateMovie(m *Movie) (*Movie, error)
+	UpdateMovie(m *Movie) (*Movie, error)
+	Delete(id int64) error
 }
 
 type repository struct {
@@ -31,7 +30,7 @@ func NewRepository() Repository {
 func (r *repository) FindAll() ([]Movie, error) {
 	sess, err := postgresql.Open(settings)
 	if err != nil {
-		log.Fatal("FindAll.Open(settings): ", err)
+		fmt.Print("FindAll.Open(settings): ", err)
 	}
 	defer sess.Close()
 
@@ -41,7 +40,7 @@ func (r *repository) FindAll() ([]Movie, error) {
 
 	err = filmsCol.Find().All(&films)
 	if err != nil {
-		log.Fatal("filmsCol: ", err)
+		fmt.Print("filmsCol: ", err)
 	}
 
 	return films, nil
@@ -50,7 +49,7 @@ func (r *repository) FindAll() ([]Movie, error) {
 func (r *repository) FindById(id int64) (*Movie, error) {
 	sess, err := postgresql.Open(settings)
 	if err != nil {
-		log.Fatal("Open: ", err)
+		fmt.Print("Open: ", err)
 	}
 	defer sess.Close()
 
@@ -61,7 +60,7 @@ func (r *repository) FindById(id int64) (*Movie, error) {
 		Where("id", id).
 		One(&film)
 	if err != nil {
-		log.Fatal("Query: ", err)
+		fmt.Print("Query: ", err)
 	}
 
 	return &Movie{
@@ -72,83 +71,59 @@ func (r *repository) FindById(id int64) (*Movie, error) {
 	}, nil
 }
 
-func (r *repository) CreateMovie(name string, director string, year int64) (*Movie, error) {
+func (r *repository) CreateMovie(m *Movie) (*Movie, error) {
 	sess, err := postgresql.Open(settings)
 	if err != nil {
-		log.Fatal("Open: ", err)
+		fmt.Print("Open: ", err)
 	}
-	db.LC().SetLevel(db.LogLevelDebug)
 	defer sess.Close()
 
 	_, err = sess.SQL().
 		InsertInto("movies").
-		Columns("name", "director", "year").Values(name, director, year).
+		Columns("id", "name", "director", "year").Values(m.ID, m.Name, m.Director, m.Year).
 		Exec()
 	if err != nil {
 		fmt.Printf("Query: %v. This is expected on the read-only sandbox.\n", err)
 	}
-	return &Movie{
-		Name:     name,
-		Director: director,
-		Year:     year,
-	}, nil
+
+	lastMovie, err := r.FindById(m.ID)
+	if err != nil {
+		fmt.Print("movie.Insert: ", err)
+	}
+	return lastMovie, nil
 }
 
-func (r *repository) UpdateMovie(id int64, name string, director string, year int64) (*Movie, error) {
+func (r *repository) UpdateMovie(m *Movie) (*Movie, error) {
 	sess, err := postgresql.Open(settings)
 	if err != nil {
-		log.Fatal("Open: ", err)
+		fmt.Print("Open: ", err)
 	}
-	db.LC().SetLevel(db.LogLevelDebug)
 	defer sess.Close()
 
-	if name != "" {
-		_, err := sess.SQL().
-			Update("movies").
-			Set("name = ?", name).
-			Where("id = ?", id).
-			Exec()
-		if err != nil {
-			fmt.Printf("sess.SQL: %v. This is expected on the read-only sandbox.\n", err)
-		}
-	}
-
-	if director != "" {
-		_, err := sess.SQL().
-			Update("movies").
-			Set("director = ?", director).
-			Where("id = ?", id).
-			Exec()
-		if err != nil {
-			fmt.Printf("sess.SQL: %v. This is expected on the read-only sandbox.\n", err)
-		}
-	}
-
-	if year != 0 {
-		_, err := sess.SQL().
-			Update("movies").
-			Set("year = ?", year).
-			Where("id = ?", id).
-			Exec()
-		if err != nil {
-			fmt.Printf("sess.SQL: %v. This is expected on the read-only sandbox.\n", err)
-		}
-	}
-
-	var films Movie
-
-	err = sess.SQL().
-		SelectFrom("movies").
-		Where("id", id).
-		One(&films)
+	_, err = sess.SQL().
+		Update("movies").
+		Set("name", m.Name, "director", m.Director, "year", m.Year).
+		Where("id = ?", m.ID).
+		Exec()
 	if err != nil {
-		log.Fatal("sess.SQL: ", err)
+		fmt.Print("movies.Update: ", err)
 	}
 
-	return &Movie{
-		ID:       films.ID,
-		Name:     films.Name,
-		Director: films.Director,
-		Year:     films.Year,
-	}, nil
+	return r.FindById(m.ID)
+}
+
+func (r *repository) Delete(id int64) error {
+	sess, err := postgresql.Open(settings)
+	if err != nil {
+		fmt.Print("FindAll.Open(settings): ", err)
+	}
+	defer sess.Close()
+
+	filmColl := sess.Collection("movies")
+	err = filmColl.Find("id", id).Delete()
+	if err != nil {
+		fmt.Print("filmColl.Delete: ", err)
+	}
+
+	return err
 }

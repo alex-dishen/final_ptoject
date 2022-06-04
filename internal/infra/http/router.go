@@ -46,12 +46,16 @@ func AddEventRoutes(router *chi.Router, eventController *controllers.EventContro
 			eventController.FindById(),
 		)
 		apiRouter.Post(
-			"/{name}/{director}/{year}",
+			"/",
 			eventController.CreateMovie(),
 		)
-		apiRouter.Post(
-			"/update/{id}/{name}/{director}/{year}",
+		apiRouter.Put(
+			"/",
 			eventController.UpdateMovie(),
+		)
+		apiRouter.Delete(
+			"/{id}",
+			eventController.Delete(),
 		)
 	})
 }
